@@ -1,0 +1,30 @@
+<!-- input_sequence.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Wprowadź sekwencję{% endblock %}
+
+{% block content %}
+    <h1>Tutaj wprowadzamy sekwencje i otrzymujemy informację o białku.</h1>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field_errors in form.errors.values %}
+                    {% for error in field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <button type="submit">Wyślij</button>
+    </form>
+
+    {% if converted_data %}
+        <div class="result">
+            Przetworzone dane: {{ input_data }}
+        </div>
+    {% endif %}
+{% endblock %}

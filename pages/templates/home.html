@@ -1,0 +1,23 @@
+<!-- home.html (child template) -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}GeneApp{% endblock %}
+
+{% block content %}
+    <h1>Jest to główna strona dla serwisu GeneApp, najlepszej platformy dla poskręcanych nitek!</h1>
+
+    <br>
+
+    <p>Zadaniem tej strony jest zebranie ogólnodostępnych narzędzi do analizy sekwencji DNA i białek
+    oraz umożliwienie wygodnego skorzystania z nich użytkownikowi. Dostępne funkcje to: wyszukiwanie id białka po
+    wprowadzeniu sekwencji, otrzymanie sekwencji DNA po wprowadzeniu ID białka, porównanie sekwencji i
+    wygenerowanie trójwymiarowej struktury wprowadzonego białka.</p>
+
+    <br>
+    <br>
+    <div>
+        <img src="{% static 'images/helix.png' %}">
+    </div>
+{% endblock %}

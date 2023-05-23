@@ -1,0 +1,33 @@
+# Pliki i foldery utworzone przez środowisko wirtualne
+venv/
+Lib/
+Include/
+
+# Pliki wygenerowane przez IDE
+.idea/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Pliki konfiguracyjne IDE
+*.iml
+*.ipr
+*.iws
+
+# Pliki konfiguracyjne PyCharm
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.idea/dictionaries
+/.idea/jsLibraryMappings.xml
+
+# Pliki tymczasowe
+*.bak
+*.swp
+*~
+
+# Pliki lokalnej bazy danych SQLite
+*.db
+
+# Pliki logów
+*.log
