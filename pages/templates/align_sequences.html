@@ -1,9 +1,42 @@
-<!-- compare_sequences.html (child template) -->
+<!-- align_sequences.html (child template) -->
 
 {% extends 'base.html' %}
 
 {% block title %}GeneApp{% endblock %}
 
 {% block content %}
-    Tutaj wprowadzamy wybraną ilość sekwencji i porównujemy je według wybranego algorytmu.
+    <form method="post" class="align-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="first_seq">First Sequence:</label>
+            <input type="text" class="form-control" id="first_seq" name="first_seq" value="{{ first_seq }}">
+        </div>
+        <div class="form-group">
+            <label for="second_seq">Second Sequence:</label>
+            <input type="text" class="form-control" id="second_seq" name="second_seq" value="{{ second_seq }}">
+        </div>
+        <div class="form-group">
+            <label for="window">Window:</label>
+            <input type="number" class="form-control" id="window" name="window" value="{{ window }}">
+        </div>
+        <div class="form-group">
+            <label for="threshold">Threshold:</label>
+            <input type="number" class="form-control" id="threshold" name="threshold" value="{{ threshold }}">
+        </div>
+        <div class="form-group">
+            <label for="first_seq_file">Upload First Sequence File:</label>
+            <input type="file" class="form-control-file" id="first_seq_file" name="first_seq_file">
+        </div>
+        <div class="form-group">
+            <label for="second_seq_file">Upload Second Sequence File:</label>
+            <input type="file" class="form-control-file" id="second_seq_file" name="second_seq_file">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Generate Plot</button>
+        </div>
+    </form>
+
+    {% if plot_base64 %}
+        <img src="data:image/png;base64,{{ plot_base64 }}" alt="Dot Plot" class="plot-img">
+    {% endif %}
 {% endblock %}

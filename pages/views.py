@@ -1,7 +1,8 @@
-
+import base64
 from django.shortcuts import render
 from .forms import DataForm
-from .utils import validate_sequence, find_sequence
+from .utils.utils import validate_sequence, find_sequence
+from .utils.align_utils import dotplot, upload_sequence
 
 def home(request):
     return render(request, "home.html", {})
@@ -19,6 +20,7 @@ def input_sequence(request):
                     'result': result
                 }
                 return render(request, 'input_sequence.html', context)
+                print(input_data)
             else:
                 form.add_error('input_data', 'input data is not correct')
     else:
@@ -29,5 +31,33 @@ def input_sequence(request):
 def input_protein(request):
     return render(request, "input_protein.html", {})
 
+
 def align_sequences(request):
-    return render(request, "align_sequences.html", {})
+    if request.method == 'POST':
+        first_seq = request.POST.get('first_seq', '')
+        second_seq = request.POST.get('second_seq', '')
+        window = int(request.POST.get('window', '0'))
+        threshold = int(request.POST.get('threshold', '0'))
+
+        first_file = request.FILES.get('first_seq_file')
+        second_file = request.FILES.get('second_seq_file')
+        if first_file and second_file:
+            first_seq, second_seq = upload_sequence(first_file, second_file)
+
+        plot_data = dotplot(first_seq, second_seq, window, threshold)
+
+        # Konwersja danych wykresu na base64
+        plot_base64 = base64.b64encode(plot_data).decode('utf-8')
+
+        context = {
+            'plot_base64': plot_base64,
+            'first_seq': first_seq,
+            'second_seq': second_seq,
+            'window': window,
+            'threshold': threshold
+        }
+
+        return render(request, "align_sequences.html", context)
+    else:
+        return render(request, "align_sequences.html", {})
+
