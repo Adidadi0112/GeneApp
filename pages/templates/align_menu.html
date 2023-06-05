@@ -1,0 +1,42 @@
+<!-- align_sequences.html (child template) -->
+
+{% extends 'base.html' %}
+
+{% block title %}GeneApp{% endblock %}
+
+{% block content %}
+<h1>Align Sequences</h1>
+<p>Here are several methods for sequence aligning analysis</p>
+
+<div class="row justify-content-center">
+    <div class="col-md-4 d-flex">
+        <div class="card flex-grow-1">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Dot plot</h5>
+                <p class="card-text">Visual alignment tool revealing sequence similarities and differences through the presence of dots at matching positions.</p>
+                <a href="/dotplot" class="btn btn-primary mt-auto">Try it!</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 d-flex">
+        <div class="card flex-grow-1">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Needlman-Wunsch</h5>
+                <p class="card-text">The Needleman-Wunsch algorithm is a dynamic programming method used for global alignment of two sequences, which finds the optimal alignment by minimizing the alignment cost or maximizing the similarity between the sequences.</p>
+                <a href="/needleman_wunsch" class="btn btn-primary mt-auto">Try it!</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 d-flex">
+        <div class="card flex-grow-1">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">MSA</h5>
+                <p class="card-text">MSA(Multiple Sequence Alignment) algorithm aligns multiple sequences, revealing conserved regions and structural similarities. It aids in understanding evolutionary relationships and has applications in diverse fields such as evolutionary biology and protein structure prediction.</p>
+                <a href="/msa" class="btn btn-primary mt-auto">Try it!</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

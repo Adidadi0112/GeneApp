@@ -22,9 +22,9 @@
         <button type="submit">Wyślij</button>
     </form>
 
-    {% if converted_data %}
-        <div class="result">
-            Przetworzone dane: {{ input_data }}
+
+        <div class="table-responsive">
+            {{ result|safe }}
         </div>
-    {% endif %}
+
 {% endblock %}

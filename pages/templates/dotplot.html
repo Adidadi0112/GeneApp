@@ -12,8 +12,16 @@
             <input type="text" class="form-control" id="first_seq" name="first_seq" value="{{ first_seq }}">
         </div>
         <div class="form-group">
+            <label for="first_seq_file">Upload First Sequence File:</label>
+            <input type="file" class="form-control-file" id="first_seq_file" name="first_seq_file" value="{{ first_seq }}">
+        </div>
+        <div class="form-group">
             <label for="second_seq">Second Sequence:</label>
-            <input type="text" class="form-control" id="second_seq" name="second_seq" value="{{ second_seq }}">
+            <input type="text" class="form-control" id="second_seq" name="second_seq" value="{{ second_seq }} ">
+        </div>
+        <div class="form-group">
+            <label for="second_seq_file">Upload Second Sequence File:</label>
+            <input type="file" class="form-control-file" id="second_seq_file" name="second_seq_file" value="{{ second_seq }} ">
         </div>
         <div class="form-group">
             <label for="window">Window:</label>
@@ -23,14 +31,7 @@
             <label for="threshold">Threshold:</label>
             <input type="number" class="form-control" id="threshold" name="threshold" value="{{ threshold }}">
         </div>
-        <div class="form-group">
-            <label for="first_seq_file">Upload First Sequence File:</label>
-            <input type="file" class="form-control-file" id="first_seq_file" name="first_seq_file">
-        </div>
-        <div class="form-group">
-            <label for="second_seq_file">Upload Second Sequence File:</label>
-            <input type="file" class="form-control-file" id="second_seq_file" name="second_seq_file">
-        </div>
+
         <div>
             <button type="submit" class="btn btn-primary">Generate Plot</button>
         </div>

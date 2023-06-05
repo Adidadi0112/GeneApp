@@ -1,11 +1,13 @@
 import base64
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import DataForm
 from .utils.utils import validate_sequence, find_sequence
-from .utils.align_utils import dotplot, upload_sequence
+from .utils.align_utils import dotplot, upload_sequence, needleman_wunsch
+
 
 def home(request):
     return render(request, "home.html", {})
+
 
 def input_sequence(request):
     if request.method == 'POST':
@@ -20,7 +22,6 @@ def input_sequence(request):
                     'result': result
                 }
                 return render(request, 'input_sequence.html', context)
-                print(input_data)
             else:
                 form.add_error('input_data', 'input data is not correct')
     else:
@@ -28,11 +29,16 @@ def input_sequence(request):
 
     return render(request, 'input_sequence.html', {'form': form})
 
+
 def input_protein(request):
     return render(request, "input_protein.html", {})
 
 
-def align_sequences(request):
+def align_menu(request):
+    return render(request, "align_menu.html", {})
+
+
+def dotplot_view(request):
     if request.method == 'POST':
         first_seq = request.POST.get('first_seq', '')
         second_seq = request.POST.get('second_seq', '')
@@ -57,7 +63,60 @@ def align_sequences(request):
             'threshold': threshold
         }
 
-        return render(request, "align_sequences.html", context)
+        return render(request, "dotplot.html", context)
     else:
-        return render(request, "align_sequences.html", {})
+        return render(request, "dotplot.html", {})
+
+
+def needleman_wunsch_view(request):
+    if request.method == 'POST':
+        seq1 = request.POST.get('seq1', '')
+        seq2 = request.POST.get('seq2', '')
+
+        if seq1 and seq2:
+            score, aligned_seq1, aligned_seq2, scoring_array, traceback_array = needleman_wunsch(seq1, seq2)
+
+            context = {
+                'seq1': seq1,
+                'seq2': seq2,
+                'score': score,
+                'aligned_seq1': aligned_seq1,
+                'aligned_seq2': aligned_seq2,
+                'scoring_array': scoring_array,
+                'traceback_array': traceback_array,
+                'show_result': True  # Dodaj nowy klucz kontekstu 'show_result' i ustaw go na True
+            }
+
+            return render(request, "needleman_wunsch.html", context)
+
+    return render(request, "needleman_wunsch.html", {})
+
+
+def msa_view(request):
+    if request.method == 'POST':
+        sequences = request.session.get('sequences', [])
+        action = request.POST.get('action')
+
+        if action == 'add':
+            sequence = request.POST.get('sequence')
+            sequences.append(sequence)
+            request.session['sequences'] = sequences
+        elif action == 'delete':
+
+            if sequences:
+                sequences.pop()
+
+                request.session['sequences'] = sequences
+
+        return redirect('msa')
+
+    else:
+        sequences = request.session.get('sequences', [])
+
+    context = {
+        'sequences': sequences
+    }
+
+    return render(request, 'msa.html', context)
+
 

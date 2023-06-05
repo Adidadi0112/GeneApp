@@ -21,20 +21,20 @@ def find_sequence(sequence):
     table_html += "<tr><th>Alignment Title</th><th>HSP</th></tr>"
 
     # Dodawanie danych do tabeli HTML
-    count = 0  # Licznik dopasowań
+    alignments = []
     for alignment in blast_records.alignments:
         for hsp in alignment.hsps:
-            table_html += "<tr>"
-            table_html += f"<td>{alignment.title[:80]}</td>"
-            table_html += f"<td>{str(hsp)}</td>"
-            table_html += "</tr>"
-            count += 1
+            alignment_data = {
+                'title': alignment.title[:80],
+                'hsp': str(hsp)
+            }
+            alignments.append(alignment_data)
 
-            if count == 5:  # Przerwij pętlę po znalezieniu 5 rekordów
-                break
-
-        if count == 5:  # Przerwij pętlę po znalezieniu 5 rekordów
-            break
+    for alignment_data in alignments[:5]:  # Wyświetlaj tylko 5 najlepszych dopasowań
+        table_html += "<tr>"
+        table_html += f"<td>{alignment_data['title']}</td>"
+        table_html += f"<td>{alignment_data['hsp']}</td>"
+        table_html += "</tr>"
 
     table_html += "</table>"
 

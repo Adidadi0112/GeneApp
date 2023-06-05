@@ -1,0 +1,46 @@
+<!-- needleman_wunsch.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}GeneApp{% endblock %}
+
+{% block content %}
+   <form method="post" action="{% url 'needleman_wunsch' %}">
+       {% csrf_token %}
+       <label for="seq1">Sequence 1:</label>
+       <input type="text" name="seq1" id="seq1" required><br>
+       <label for="seq2">Sequence 2:</label>
+       <input type="text" name="seq2" id="seq2" required><br>
+       <input type="submit" value="Compare Sequences">
+   </form>
+
+   {% if show_result %}
+       <h2>Needleman-Wunsch Result</h2>
+       <p>Sequence 1: {{ seq1 }}</p>
+       <p>Sequence 2: {{ seq2 }}</p>
+       <p>Alignment Score: {{ score }}</p>
+       <h3>Aligned Sequences:</h3>
+       <p>{{ aligned_seq1 }}</p>
+       <p>{{ aligned_seq2 }}</p>
+       <h3>Scoring Array:</h3>
+       <table>
+           {% for row in scoring_array %}
+               <tr>
+                   {% for value in row %}
+                       <td>{{ value }}</td>
+                   {% endfor %}
+               </tr>
+           {% endfor %}
+       </table>
+       <h3>Traceback Array:</h3>
+       <table>
+           {% for row in traceback_array %}
+               <tr>
+                   {% for value in row %}
+                       <td>{{ value }}</td>
+                   {% endfor %}
+               </tr>
+           {% endfor %}
+       </table>
+   {% endif %}
+{% endblock %}
