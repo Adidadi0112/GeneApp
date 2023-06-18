@@ -1,0 +1,27 @@
+<!-- sequence_graph.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+    Generate Graph - Protein Sequence
+{% endblock %}
+
+{% block content %}
+    <h1>Generate Graph - Protein Sequence</h1>
+
+    <form method="POST" action="{% url 'sequence_graph' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="sequence">Protein Sequence:</label>
+            <textarea class="form-control" name="sequence" rows="5" cols="50"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Generate</button>
+    </form>
+
+    {% if image_data %}
+        <h2>Visualization of predicted protein structure:</h2>
+        <img src="data:image/png;base64,{{ image_data }}" alt="Protein Structure">
+
+        <h2>plDDT:</h2>
+        <p>{{ b_value }}</p>
+    {% endif %}
+{% endblock %}

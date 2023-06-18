@@ -1,0 +1,46 @@
+<!-- msa.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}GeneApp{% endblock %}
+
+{% block content %}
+<form method="post" action="{% url 'msa' %}">
+    {% csrf_token %}
+    <label for="sequence">Sequence:</label>
+    <input type="text" name="sequence" id="sequence" required>
+    <input type="hidden" name="action" value="add">
+    <input type="submit" value="Add Sequence">
+</form>
+
+{% if sequences %}
+    <h3>Sequences:</h3>
+    <ul>
+        {% for sequence in sequences %}
+            <li>{{ sequence }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="{% url 'msa' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="delete">
+        <button type="submit">Delete Last Sequence</button>
+    </form>
+    <br>
+    <form method="post" action="{% url 'msa' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="perform_msa">
+        <button type="submit">Perform MSA</button>
+    </form>
+
+    {% if alignment %}
+        <h3>MSA Results:</h3>
+        <ul>
+            {% for seq in alignment %}
+                <li>{{ seq }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endif %}
+{% endblock %}

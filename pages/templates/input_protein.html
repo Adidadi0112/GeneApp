@@ -1,16 +1,25 @@
-<! -- input_protein.html (child template) -->
+<!-- input_protein.html -->
 
 {% extends "base.html" %}
 
 {% block title %}GeneApp{% endblock %}
 
 {% block content %}
-    <h1>W tym miejscu możesz wprowadzić ID białka, żeby poznać jego sekwencje.</h1>
+    <h1>Here you can enter the protein ID to discover its sequence.</h1>
     <br>
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
+
+    {% if sequence %}
+        <h2>Wynik</h2>
+        <p>Sekwencja: {{ sequence }}</p>
+    {% endif %}
+
+    {% if error_message %}
+        <h2>Błąd</h2>
+        <p>{{ error_message }}</p>
+    {% endif %}
 {% endblock %}
-```
