@@ -1,7 +1,7 @@
 import io
 import matplotlib.pyplot as plt
 from numpy import full
-import pandas as pd
+import numpy as np
 
 def dotplot(first_seq, second_seq, window, threshold):
     fig, ax = plt.subplots()
@@ -84,3 +84,51 @@ def needleman_wunsch(seq1, seq2, gap_penalty=-1, match_score=1,
             traceback_array[i, j] = up_arrow
             j -= 1
     return scoring_array[len(seq1)][len(seq2)], aligned_seq1, aligned_seq2, scoring_array, traceback_array
+
+def central_sequence(seqs):
+    M = full([len(seqs),len(seqs)],0)
+    for i in range(len(seqs)):
+      for j in range(len(seqs)):
+        result = needleman_wunsch(seqs[i],seqs[j],-1,1,-1)
+        M[i,j] = result[0]
+    sum_row = np.sum(M, axis=1)
+    return M
+
+def star_msa(seqs):
+    M = central_sequence(seqs)
+    n = len(seqs)
+
+    alignment = []
+
+    central_seq_index = np.argmax(np.sum(M, axis=1))
+    central_seq = seqs[central_seq_index]
+    alignment.append(central_seq)
+
+    for i in range(n):
+        if i != central_seq_index:
+            aligned_seq = ''
+            seq = seqs[i]
+            central_len = len(central_seq)
+            seq_len = len(seq)
+            j = 0
+            k = 0
+            while j < central_len or k < seq_len:
+                if j < central_len and k < seq_len:
+                    if central_seq[j] == seq[k]:
+                        aligned_seq += central_seq[j]
+                        j += 1
+                        k += 1
+                    else:
+                        aligned_seq += '-'
+                        j += 1
+                        k += 1
+                elif j < central_len:
+                    aligned_seq += '-'
+                    j += 1
+                elif k < seq_len:
+                    aligned_seq += seq[k]
+                    k += 1
+            alignment.append(aligned_seq)
+    return alignment
+
+

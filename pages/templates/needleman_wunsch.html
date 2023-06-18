@@ -32,15 +32,5 @@
                </tr>
            {% endfor %}
        </table>
-       <h3>Traceback Array:</h3>
-       <table>
-           {% for row in traceback_array %}
-               <tr>
-                   {% for value in row %}
-                       <td>{{ value }}</td>
-                   {% endfor %}
-               </tr>
-           {% endfor %}
-       </table>
    {% endif %}
 {% endblock %}

@@ -26,6 +26,21 @@
         <input type="hidden" name="action" value="delete">
         <button type="submit">Delete Last Sequence</button>
     </form>
+    <br>
+    <form method="post" action="{% url 'msa' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="perform_msa">
+        <button type="submit">Perform MSA</button>
+    </form>
+
+    {% if alignment %}
+        <h3>MSA Results:</h3>
+        <ul>
+            {% for seq in alignment %}
+                <li>{{ seq }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 {% endif %}
 {% endblock %}

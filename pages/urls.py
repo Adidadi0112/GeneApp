@@ -8,4 +8,5 @@ urlpatterns = [
     path('align_menu/', views.align_menu, name='align_menu'),
     path('needleman_wunsch/', views.needleman_wunsch_view, name='needleman_wunsch'),
     path('msa/', views.msa_view, name='msa'),
+    path('sequence_graph/', views.sequence_graph, name='sequence_graph'),
 ]

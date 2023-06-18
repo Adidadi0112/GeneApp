@@ -5,7 +5,7 @@
 {% block title %}Wprowadź sekwencję{% endblock %}
 
 {% block content %}
-    <h1>Tutaj wprowadzamy sekwencje i otrzymujemy informację o białku.</h1>
+    <h1>Here you can input a sequence and receive information about the corresponding protein.</h1>
     <br>
     <form method="post">
         {% csrf_token %}
@@ -19,7 +19,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <button type="submit">Wyślij</button>
+        <button type="submit">Send</button>
     </form>
 
 
